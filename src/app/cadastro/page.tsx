@@ -61,7 +61,6 @@ const Cadastro: React.FC = () => {
                     type="file"
                     {...register('rules')}
                 />
-                {errors.rules && <span className='text-mikasa-red text-sm text-center pt-2 mx-auto'>{errors.rules.message}</span>}
                 </div>
                 <button disabled={isSubmitting} type="submit" className="inline-block w-full rounded bg-blue-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2">
                     {isSubmitting ? 'Salvando...' : 'Salvar'}
