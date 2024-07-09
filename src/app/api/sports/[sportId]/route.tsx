@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-const prisma = new PrismaClient()
+import prisma from "@/utils/prisma";
 
 export async function GET(req: Request, {params} : {params: { sportId: string }}) {
     const sport = await prisma.sports.findFirst({
