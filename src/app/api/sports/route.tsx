@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { put } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient()
@@ -44,23 +45,27 @@ export async function GET(req: Request) {
 
 
 export async function POST(req: NextRequest) {
-    const body = await req.json();
-
-    console.log(body)
+    const body = await req.formData();
+    const file = (body.get('rules') as File)
 
     try {
 
-        const response = await prisma.sports.create({
+        const upload = await put(file.name, file, {
+            access: 'public'
+        })
+
+        console.log(upload)
+        /*const response = await prisma.sports.create({
             data: {
                 name: '',
                 playersPerTeam: 1,
                 rulesUrl: ''
             }
-        })
+        })*/
 
         return NextResponse.json({
             message: "Esporte cadastrado com sucesso",
-            data: response
+            data: upload
         });
     } catch (error) {
         console.error(error);

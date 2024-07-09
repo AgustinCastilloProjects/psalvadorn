@@ -17,12 +17,13 @@ const Cadastro: React.FC = () => {
     });
 
     const handleSubmitForm: SubmitHandler<SportForm> = async (data) => {
-        console.log(data)
-        axios.post('api/sports', {
-            name: data.name,
-            playersPerTeam: data.playersPerTeam,
-            rules: data.rules
-        })
+
+        const formData = new FormData()
+        formData.append('name', data.name)
+        formData.append('playersPerTeam', data.playersPerTeam.toString())
+        formData.append('rules', data.rules[0])
+        console.log(data.rules[0])
+        axios.post('api/sports', formData)
     }
 
 
@@ -54,7 +55,12 @@ const Cadastro: React.FC = () => {
                 </div>
                 <div className="relative mb-6" data-twe-input-wrapper-init>
                 <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="file_input">Upload file</label>
-                <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" id="file_input" type="file" />
+                <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+                    id="file_input"
+                    type="file"
+                    {...register('rules')}
+                />
                 {errors.rules && <span className='text-mikasa-red text-sm text-center pt-2 mx-auto'>{errors.rules.message}</span>}
                 </div>
                 <button disabled={isSubmitting} type="submit" className="inline-block w-full rounded bg-blue-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2">
