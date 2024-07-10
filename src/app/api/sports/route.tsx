@@ -1,42 +1,11 @@
-import prisma from "@/utils/prisma";
+import { PrismaClient } from "@prisma/client";
 import { put } from "@vercel/blob";
 import { NextRequest, NextResponse } from "next/server";
 
+const prisma = new PrismaClient()
 
 
-export async function GET(req: Request) {
-    const mockEsportes = [
-        {
-            id: 1,
-            name: 'Futebol',
-            playersPerTeam: 11,
-            rules: 'Rule 1, Rule 2, Rule 3'
-        },
-        {
-            id: 2,
-            name: 'Basquete',
-            playersPerTeam: 5,
-            rules: 'Rule 1, Rule 2, Rule 3'
-        },
-        {
-            id: 3,
-            name: 'Handball',
-            playersPerTeam: 7,
-            rules: 'Rule 1, Rule 2, Rule 3'
-        },
-        {
-            id: 4,
-            name: 'Futsal',
-            playersPerTeam: 5,
-            rules: 'Rule 1, Rule 2, Rule 3'
-        },
-        {
-            id: 5,
-            name: 'Futevolei',
-            playersPerTeam: 2,
-            rules: 'Rule 1, Rule 2, Rule 3'
-        }
-    ]
+export async function GET(req: NextRequest) {
 
     const response = await prisma.sports.findMany()
 
@@ -48,26 +17,28 @@ export async function POST(req: NextRequest) {
     const body = await req.formData();
     const file = (body.get('rules') as File)
 
+    const name = body.get('name')?.toString() || ''
+    const playersPerTeam = body.get('playersPerTeam')?.toString() || '0'
+
     try {
 
         const upload = await put(file.name, file, {
             access: 'public'
         })
 
-        console.log(upload)
-        /*const response = await prisma.sports.create({
+        const response = await prisma.sports.create({
             data: {
-                name: '',
-                playersPerTeam: 1,
-                rulesUrl: ''
+                name,
+                playersPerTeam: parseInt(playersPerTeam),
+                rulesUrl: upload.url
             }
-        })*/
+        })
 
         return NextResponse.json({
             message: "Esporte cadastrado com sucesso",
-            data: upload
+            data: response
         });
     } catch (error) {
-        console.error(error);
+        console.log(error)
     }
 }
