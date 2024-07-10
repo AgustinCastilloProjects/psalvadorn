@@ -2,7 +2,7 @@
 
 import SportsForm from "@/components/Forms/SportsForm";
 import { SportForm } from "@/models";
-import axios from "axios";
+import { api } from "@/utils";
 import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -15,7 +15,7 @@ const Cadastro: React.FC = () => {
         formData.append('playersPerTeam', data.playersPerTeam.toString())
         formData.append('rules', data.rules[0])
         console.log(data.rules[0])
-        axios.post('api/sports', formData).then(res => {
+        api.post('sports', formData).then(res => {
             toast.success(res.data.message)
         })
     }

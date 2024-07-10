@@ -17,10 +17,9 @@ export default function Home() {
 
 
   useEffect( () => {
-    api.get('sports').then(res => {
+    api.get(`sports`).then( res => {
       setSports(res.data.response)
     })
-
 
   }, [])
 
