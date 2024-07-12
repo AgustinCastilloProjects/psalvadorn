@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
         <footer className="bg-gray-800 text-center">
             <div className="bg-black/5 p-4 text-center text-surface text-white">
                 © 2024 Copyright:
-                <Link href="https://tw-elements.com/"> Agustin Castillo</Link>
+                <Link href="https://github.com/AgustinCastilloProjects/"> Agustin Castillo</Link>
             </div>
         </footer>
     )
