@@ -3,10 +3,12 @@
 import SportsForm from "@/components/Forms/SportsForm";
 import { SportForm } from "@/models";
 import { api } from "@/utils";
+import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const Cadastro: React.FC = () => {
+    const router = useRouter()
 
     const handleSubmitForm: SubmitHandler<SportForm> = async (data) => {
 
@@ -17,6 +19,7 @@ const Cadastro: React.FC = () => {
         console.log(data.rules[0])
         api.post('sports', formData).then(res => {
             toast.success(res.data.message)
+            router.push('/')
         })
     }
 

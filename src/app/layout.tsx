@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <div className="p-10 min-h-screen">
+        <div className="p-4 sm:p-10 min-h-screen">
           <Toaster position="top-right" />
           {children}
         </div>
